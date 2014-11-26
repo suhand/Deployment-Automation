@@ -1,0 +1,60 @@
+<nodes>
+    <node id ="appserver-mgr" type="standalone">
+        <product name="appserver" version="5.2.1" />
+	<subDomain>mgt</subDomain>
+	<configurations>
+            <config id="axis2_xml" fileName="axis2.xml" location="/opt/wso2as-5.2.1/repository/conf/axis2">
+              	<clustering>true</clustering>
+               	<ipaddress>127.0.0.1</ipaddress>
+              	<tribes_port>4100</tribes_port>
+            </config>
+            <config id="carbon_xml" fileName="carbon.xml" location="/opt/wso2as-5.2.1/repository/conf">
+            	<as_subdomain>as</as_subdomain>
+		<domain>wso2.com</domain>
+		<sub_cluster_domain>mgt.</sub_cluster_domain>
+		<offset>0</offset>
+		<cloud>false</cloud>
+		<depsync>false</depsync>
+		<depsync_svn_repo>https://svn.wso2.com/wso2/interns/2013/suhanr/depsync/</depsync_svn_repo>
+		<svn_user>suhanr@wso2.com</svn_user>
+		<svn_password>password</svn_password>
+	    </config>
+	    <config id="catalina_server_xml" fileName="catalina-server.xml" location="/opt/wso2as-5.2.1/repository/conf/tomcat">
+		<http_proxyport>80</http_proxyport>
+		<https_proxyport>443</https_proxyport>
+	    </config>
+        </configurations>
+        <serverOptions>-Dsetup</serverOptions>
+    </node>
+    <node id ="appserver-wkr" type="standalone">
+        <product name="appserver" version="5.2.1" />
+	<subDomain>worker</subDomain>
+	<configurations>
+            <config id="axis2_xml" fileName="axis2.xml" location="/opt/wso2as-5.2.1/repository/conf/axis2">
+                <clustering>true</clustering>
+                <ipaddress>127.0.0.1</ipaddress>
+                <tribes_port>4100</tribes_port>
+		<members>
+			<hostName>{appserver-mgr}</hostName>
+		</members>
+            </config>
+            <config id="carbon_xml" fileName="carbon.xml" location="/opt/wso2as-5.2.1/repository/conf">
+                <as_subdomain>as</as_subdomain>
+                <domain>wso2.com</domain>
+                <sub_cluster_domain> </sub_cluster_domain>
+                <offset>0</offset>
+                <cloud>false</cloud>
+                <depsync>false</depsync>
+                <depsync_svn_repo>https://svn.wso2.com/wso2/interns/2013/suhanr/depsync/</depsync_svn_repo>
+                <svn_user>suhanr@wso2.com</svn_user>
+                <svn_password>password</svn_password>
+            </config>
+            <config id="catalina_server_xml" fileName="catalina-server.xml" location="/opt/wso2as-5.2.1/repository/conf/tomcat">
+                <http_proxyport>80</http_proxyport>
+                <https_proxyport>443</https_proxyport>
+            </config>
+        </configurations>
+
+        <serverOptions>-DworkerNode=true</serverOptions>
+    </node>
+</nodes>
