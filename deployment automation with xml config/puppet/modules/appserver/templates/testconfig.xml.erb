@@ -1,0 +1,28 @@
+<% require "rexml/document" -%>
+<% doc = REXML::Document.new @allConfigurations['configurations'] -%>
+
+<axisconfig name="AxisJava2.0">
+
+    <clustering class="org.wso2.carbon.core.clustering.hazelcast.HazelcastClusteringAgent"
+                                                enable="true">
+
+        <parameter name="properties">
+            <property name="backendServerURL" value="https://${hostName}:${httpsPort}/services/"/>
+            <property name="mgtConsoleURL" value="https://${hostName}:${httpsPort}/"/>
+                                                <property name="subDomain" value="<%= doc.elements["node/subDomain"].text %>"/>
+        </parameter>
+
+	<parameter name="localMemberHost"><%= @ipaddress %></parameter>
+
+        <members>
+<% doc.elements.each("node/configurations/config[@id='axis2_xml']/members/hostName") do |member_iter| -%>
+            <member>
+                 <%= member_iter %>
+                 <port><%= doc.elements["node/configurations/config[@id='axis2_xml']/tribes_port"].text %></port>
+            </member>
+<% end -%>
+        </members>
+
+    </clustering>
+
+</axisConfig>

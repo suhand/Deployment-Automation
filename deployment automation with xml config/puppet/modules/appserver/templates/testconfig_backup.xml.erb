@@ -1,0 +1,52 @@
+<!--% require "rexml/document" -%-->
+<!--% doc = REXML::Document.new @allConfigurations['configurations'] -%-->
+
+<axisconfig name="AxisJava2.0">
+
+    <!-- ================================================= -->
+    <!-- Globally engaged modules -->
+    <!-- ================================================= -->
+    <module ref="addressing"/>
+
+    <!-- ================================================= -->
+    <!-- Parameters -->
+    <!-- ================================================= -->
+    <parameter name="hotdeployment">true</parameter>
+    <parameter name="hotupdate">true</parameter>
+    <parameter name="enableMTOM" locked="false">optional</parameter>
+
+    <clustering class="org.wso2.carbon.core.clustering.hazelcast.HazelcastClusteringAgent"
+                                                enable="true">
+
+        <parameter name="properties">
+            <property name="backendServerURL" value="https://${hostName}:${httpsPort}/services/"/>
+            <property name="mgtConsoleURL" value="https://${hostName}:${httpsPort}/"/>
+                                                <property name="subDomain" value="xxx"/>
+        </parameter>
+
+        <!--<%= @subDomain %>
+           The list of static or well-known members. These entries will only be valid if the
+           "membershipScheme" above is set to "wka"
+        -->
+        <members>
+            <member>
+                 <!--hostName><%= @ipaddress %></hostName-->
+                 <port>4100</port>
+            </member>
+        </members>
+
+	<!--test_xml_config><%= doc.elements["node/configurations/config[@id='axis2_xml']/tribes_port"].text %></test_xml_config-->
+
+        <!--
+        Enable the groupManagement entry if you need to run this node as a cluster manager.
+        Multiple application domains with different GroupManagementAgent implementations
+        can be defined in this section.
+        -->
+        <groupManagement enable="false">
+            <applicationDomain name="wso2.as.domain"
+                               description="AS group"
+                               agent="org.wso2.carbon.core.clustering.hazelcast.HazelcastGroupManagementAgent"
+                               subDomain="worker"
+                               port="2222"/>
+        </groupManagement>
+    </clustering>

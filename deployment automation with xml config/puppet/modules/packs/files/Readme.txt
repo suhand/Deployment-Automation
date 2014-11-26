@@ -1,0 +1,1 @@
+copy java pack here as indicated in /etc/puppet/modules/appserver/manifests/
