@@ -12,11 +12,11 @@ module Puppet::Parser::Functions
                         fileDetails << {'filename' => fileName, 'filelocation'=> fileLocation, 'filecontent'=> fileContent }
                 }
 	myfiles = {
-  'nick' => {  path    => "/home/ubuntu/nick",
+  'su' => {  path    => "/home/ubuntu/su",
                ensure  => present,
-               content => "malintha",
+               content => "suhan",
                require =>  Fill_templates[$configFileDetails], },
-  'dan'  => { path    => "/home/ubuntu/dan",
+  'ma'  => { path    => "/home/ubuntu/ma",
                ensure  => present,
                content => "malintha",
                require =>  Fill_templates[$configFileDetails], },
