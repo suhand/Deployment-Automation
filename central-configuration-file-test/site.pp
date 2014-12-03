@@ -9,26 +9,3 @@ node 'appserver-wkr' {
 	include appserver
 }
 
-node 'test-node' {
-
-	#this is a test
-	$say_hello_to = 'guys and gals'
-        $myname = 'welcome file.xml'
-	$serverOptions     = '-DworkerNode=true'
-        $subDomain         = 'worker'
-        $members           = ['10.0.1.196', '10.0.1.198', '10.0.1.200', '10.0.1.202']
-
-        file {  "/tmp/$myname":
-                ensure  => file,
-                content => template('appserver/polite-file.erb'),
-        }
-
-}
-
-node 'appserver-mgr' {
-	include appserver::config_mgr
-}
-
-node 'appserver-wkrxxx' {
-	include appserver::config_wkr
-}
