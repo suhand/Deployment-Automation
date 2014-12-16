@@ -1,6 +1,3 @@
-#import os
-#import time
-#from novaclient.v1_1 import client
 import ConfigParser
 import collections
 
@@ -33,7 +30,7 @@ def get_openstack_keyPair():
 	config.read('deployment.cfg')
 	return config.get('envconfig', 'keyPair')
 
-# Nova credentials are loaded from OS environmental variables
+# Load server list from config file
 def load_server_config():
 	
 	serverList = []
@@ -49,7 +46,7 @@ def load_server_config():
 	return serverList
 
 # This block will only get executed when running directly
-# This can be used to debug given nova client credentials and authentication
+# This can be used to test config file structure, data retrieval and experimentation
 if __name__ == '__main__':
     try:
 	serverList = load_server_config()
