@@ -2,6 +2,7 @@
 #import time
 #from novaclient.v1_1 import client
 import ConfigParser
+import collections
 
 # Global variables
 config = ConfigParser.RawConfigParser(allow_no_value=True)
@@ -39,13 +40,11 @@ def load_server_config():
 	
 	config.read('deployment.cfg')
 	
-	dic = dict(config.items('nodes'))
-	
-	for node, ip in dic.iteritems():
+	orderedDic = collections.OrderedDict(config.items('nodes'))
+
+	for node, ip in orderedDic.iteritems():
     		serverList.append(node)
 
-	print serverList
-	serverList.sort()
 	print serverList
 	return serverList
 
