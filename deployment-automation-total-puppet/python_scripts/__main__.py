@@ -1,5 +1,19 @@
+"""
+This main script is the first script is being invoked for Deployment
+Automation. Following tasks are performed,
+  * Check which IaaS to be used based on the [environment] env value
+    of deployment.cfg (Current implementation is for OpenStack).
+  * Get environment specific configuration information.
+  * Load cluster node data.
+  * Spawn instances in OpenStack.
+  * Get facter information from instances and update puppet templates.
+TODO 
+  * Implement for EC2, Physical machines, Local
+  * Evaluate and implement docker based deployment automation
+"""
 import os
 from novaclient.v1_1 import client
+
 #import ec2
 from load_deployment_config import get_environment
 from load_deployment_config import get_openstack_image
@@ -17,6 +31,7 @@ if __name__ == '__main__':
         environment = get_environment()
 
 	if environment == "openstack":
+		"""Perform OpenStack specific deployment automation pre-tasks"""
 
 		# load openstack cloud configurations
         	print (" Loading nova configuration and spawning instances...")
@@ -30,6 +45,7 @@ if __name__ == '__main__':
 		print (" Loading deployment cluster configuration...")
 		serverList = load_server_config()
 
+		# spawn cluster topology in OpenStack environment and update puppet templates with instances' facter info
 		cluster = initialize_cluster(serverList, imageName, flavorName, networkName, instancePassword, keyPairName)
 
 	else:

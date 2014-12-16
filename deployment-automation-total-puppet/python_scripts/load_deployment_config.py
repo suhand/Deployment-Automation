@@ -1,7 +1,14 @@
+"""
+This script extracts the required configuration information
+from the deployment.cfg config file
+This is needed prior spawning instances in OpenStack, EC2, etc...
+"""
 import ConfigParser
 import collections
 
 # Global variables
+# allow_no_value set to true since the server list may be
+# recorded without any value assigned when env=openstack
 config = ConfigParser.RawConfigParser(allow_no_value=True)
 
 # Get environment
@@ -10,6 +17,7 @@ def get_environment():
 	return config.get('environment', 'env')
 
 # Load environment configuration
+# OpenStack related configuration parameters
 def get_openstack_image():
 	config.read('deployment.cfg')
 	return config.get('envconfig', 'image')
@@ -36,12 +44,16 @@ def load_server_config():
 	serverList = []
 	
 	config.read('deployment.cfg')
-	
+
+	# Put node list in to an ordered dictionary object
+	# under section [nodes] in deployment.cfg file
 	orderedDic = collections.OrderedDict(config.items('nodes'))
 
+	# For each node name append to serverList array
 	for node, ip in orderedDic.iteritems():
     		serverList.append(node)
 
+	# Return the server list name array
 	print serverList
 	return serverList
 
