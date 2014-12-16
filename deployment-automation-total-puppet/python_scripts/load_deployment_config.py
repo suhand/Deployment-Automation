@@ -10,32 +10,27 @@ import collections
 # allow_no_value set to true since the server list may be
 # recorded without any value assigned when env=openstack
 config = ConfigParser.RawConfigParser(allow_no_value=True)
+read = config.read('deployment.cfg')
 
 # Get environment
 def get_environment():
-	config.read('deployment.cfg')
 	return config.get('environment', 'env')
 
 # Load environment configuration
 # OpenStack related configuration parameters
 def get_openstack_image():
-	config.read('deployment.cfg')
 	return config.get('envconfig', 'image')
 
 def get_openstack_flavor():
-	config.read('deployment.cfg')
 	return config.get('envconfig', 'flavor')
 
 def get_openstack_network():
-	config.read('deployment.cfg')
 	return config.get('envconfig', 'network')
 
 def get_openstack_instancePassword():
-	config.read('deployment.cfg')
 	return config.get('envconfig', 'instancePassword')
 
 def get_openstack_keyPair():
-	config.read('deployment.cfg')
 	return config.get('envconfig', 'keyPair')
 
 # Load server list from config file
@@ -43,8 +38,6 @@ def load_server_config():
 	
 	serverList = []
 	
-	config.read('deployment.cfg')
-
 	# Put node list in to an ordered dictionary object
 	# under section [nodes] in deployment.cfg file
 	orderedDic = collections.OrderedDict(config.items('nodes'))
