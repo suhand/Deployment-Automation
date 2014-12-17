@@ -1,3 +1,19 @@
+"""
+Get_nova_creds function loads nova credentials from OS environment variables
+
+Initialize_cluster function performs OpenStack instance spawning,
+  * Load Nova credentials from OS environment variables
+  * Nova credentials are located in /root/.bash_profile
+  * Spawn instances according to nodes list in deployment.cfg file
+  * Assign a floating ip to each instance
+  * Get each instance ip and put in to a python dictionary
+  * Suspend instances
+  * Generate puppet params.pp file from config.pp file with facter updates
+  * Resume instances
+
+Terminate_instances function terminate the instances in OpenStack in the order
+as per the deployment.cfg [nodes] section
+"""
 import os
 import time
 from novaclient.v1_1 import client
@@ -45,12 +61,16 @@ def initialize_cluster(serverList, imageName, flavorName, networkName, instanceP
                 print server.id
 		# This time delay is given to wait till instance's network interface to get
 		# up and running for us to collect its ip address 
-                time.sleep(10)
+                time.sleep(15)
                 print instanceList[i].status
-                #floating_ip = nova.floating_ips.create(nova.floating_ip_pools.list()[0].name)
-                #print floating_ip
-                #server.add_floating_ip(floating_ip)
-                print instanceList[i].addresses
+                
+		# Floating ips added to the instances to view the management console of the 
+		# given wso2 server
+		floating_ip = nova.floating_ips.create(nova.floating_ip_pools.list()[0].name)
+                print floating_ip
+                server.add_floating_ip(floating_ip)
+                
+		print instanceList[i].addresses
                 ipmap[vm + "-ip"] =  (((instanceList[i].addresses)[networkName])[0])['addr']
                 print ipmap[vm + "-ip"]
                 print ipmap
@@ -115,8 +135,8 @@ if __name__ == '__main__':
 	print (" Retrieving image, flavor and network information...")
 
 	# Find image= "ubuntu14.04" 
-        image=nova.images.find(name="suhan-daf-agentv4-ubuntu14.04")
-        print (" nova.images.find: suhan-daf-agentv4-ubuntu14.04 --> " + str(image))
+        image=nova.images.find(name="suhan-daf-agentv5-ubuntu14.04")
+        print (" nova.images.find: suhan-daf-agentv5-ubuntu14.04 --> " + str(image))
 
         # Find flavor for 1GB RAM
         flavor=nova.flavors.find(name="m2.small")
