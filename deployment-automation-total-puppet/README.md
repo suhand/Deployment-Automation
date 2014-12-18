@@ -1,18 +1,18 @@
-Deployment Automation - puppet
-===============================
+### Deployment Automation - puppet
 
-__main__.py is the script to be invoked when starting deployment automation.
+`__main__`.py is the script to be invoked when starting deployment automation.
 
 The deployment.cfg file contain all the configuration information required for the 
 deployment automation process
 It contain following sections.
+
 1. environment name
 2. environment configuration data
 3. cluster configuration automated/manual
 4. cluster node list/size
 
 load_deployment_config.py will load these configuration data from deployment.cfg file
-and feed to __main__.py script.
+and feed to `__main__`.py script.
 
 When cluster configuration is manual, config.pp file is to be edited by the user
 according to the cluster configuration.
