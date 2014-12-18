@@ -3,7 +3,7 @@
 `__main__.py` is the script to be invoked when starting deployment automation.
 
 The `deployment.cfg` file contain all the configuration information required for the 
-deployment automation process
+deployment automation process.
 It contain following sections.
 
 1. environment name
