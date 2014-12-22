@@ -1,4 +1,4 @@
-Deployment-Automation-Framework
-===============================
+### Deployment-Automation-Framework
 
-Initial R &amp; D work commit
+Initial step for platform integration testing of WSO2 product clusters.
+Currently under Research &amp; Development
