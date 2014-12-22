@@ -26,3 +26,23 @@ Clean up process will be carried out by `terminateInstances.py` and `deletePuppe
 * `terminateInstances.py` will terminate the instances in OpenStack environment.
 * `deletePuppetCert.py` execution is needed after every successful test run if you are
 planning to use the same hostnames for the next test iteration.
+
+#### Trying with different java versions
+
+Please note that the whole cluster will be spawned using the given java version.
+
+1. Rename tar.gz jdk file downloaded
+When extracting the tar.gz file you have downloaded from web there is a specific 
+folder naming convension java follows.
+e.g.: jdk-7u51-linux-x64.tar.gz -> jdk1.7.0_51
+Therefore rename your file downloaded from jdk-7u51-linux-x64.tar.gz to jdk1.7.0_51.tar.gz
+
+2. Copy the file to /etc/puppet/modules/packs/files
+e.g.: jdk1.7.0_51.tar.gz
+
+3. Add your new java version to config.pp configuration file
+e.g.:
+# Available JDK versions
+# jdk1.6.0_24
+# jdk1.7.0_51
+$jdk_version = 'jdk1.6.0_24'
