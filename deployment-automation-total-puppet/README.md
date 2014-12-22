@@ -31,14 +31,14 @@ planning to use the same hostnames for the next test iteration.
 
 Please note that the whole cluster will be spawned using the given java version.
 
-1. Rename `*.tar.gz` downloaded jdk file.
+1. Rename `*.tar.gz` downloaded jdk file.  
 When extracting the `*.tar.gz` file you have downloaded from web there is a specific 
-folder naming convension java follows.
+folder naming convension java follows.  
 e.g.: extracting `jdk-7u51-linux-x64.tar.gz` file generates a folder named `jdk1.7.0_51`.
 Therefore rename your file downloaded from `jdk-7u51-linux-x64.tar.gz` to `jdk1.7.0_51.tar.gz`.
 
-2. After renaming the file, copy to `/etc/puppet/modules/packs/files` location.
+2. After renaming the file, copy to `/etc/puppet/modules/packs/files` location.  
 e.g.: `jdk1.7.0_51.tar.gz`
 
-3. Add your new java version to `config.pp` configuration file
+3. Add your new java version to `config.pp` configuration file  
 e.g.: `$jdk_version = 'jdk1.6.0_24'`
