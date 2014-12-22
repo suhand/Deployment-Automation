@@ -41,4 +41,4 @@ Therefore rename your file downloaded from `jdk-7u51-linux-x64.tar.gz` to `jdk1.
 e.g.: `jdk1.7.0_51.tar.gz`
 
 3. Add your new java version to `config.pp` configuration file  
-e.g.: `$jdk_version = 'jdk1.6.0_24'`
+e.g.: `$jdk_version = 'jdk1.7.0_51'`
