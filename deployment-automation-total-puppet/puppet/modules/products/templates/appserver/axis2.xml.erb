@@ -687,6 +687,15 @@
           </member>
           <%- end -%>
           <%- end -%>
+	
+	  <%- if @servers[@hostName]['axis2']['elbs'] -%>
+          <%- @servers[@hostName]['axis2']['elbs'].each do |hostname| -%>
+          <member>
+            <hostName><%= hostname %></hostName>
+            <port>4500</port>
+          </member>
+          <%- end -%>
+          <%- end -%>
         </members>
         
 	<!--

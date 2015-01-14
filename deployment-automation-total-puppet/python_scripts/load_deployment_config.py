@@ -41,10 +41,23 @@ def load_server_config():
 	# Put node list in to an ordered dictionary object
 	# under section [nodes] in deployment.cfg file
 	orderedDic = collections.OrderedDict(config.items('nodes'))
+	print orderedDic
 
 	# For each node name append to serverList array
+	#for node, ip in orderedDic.iteritems():
+    	#	serverList.append(node)
+
 	for node, ip in orderedDic.iteritems():
-    		serverList.append(node)
+                nodeValues = node.split(" ")
+                print nodeValues #output -> ['elb', '1']
+		if len(nodeValues)>1:
+			print nodeValues[0] #output -> elb
+			serverList.append(nodeValues[0])
+			#print serverList[nodeValues[1]]
+                        #serverList[nodeValues[0]]= 'true'
+                else:
+			serverList.append(node)
+                        #serverList[nodeValues[0]]= 'false'
 
 	# Return the server list name array
 	print serverList
@@ -55,6 +68,7 @@ def load_server_config():
 if __name__ == '__main__':
     try:
 	serverList = load_server_config()
+	print serverList
 
     except BaseException as b:
         print 'Exception in load_deployment_config: ', b

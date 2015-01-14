@@ -26,7 +26,6 @@
 	proxyPort="80"
     -->
     <Connector  protocol="org.apache.coyote.http11.Http11NioProtocol"
-		proxyPort="80"
                 port="9763"
                 redirectPort="9443" 
                 bindOnInit="false"
@@ -51,7 +50,6 @@
 	proxyPort="443"
     -->
     <Connector  protocol="org.apache.coyote.http11.Http11NioProtocol"
-                proxyPort="443"
                 port="9443"
                 bindOnInit="false"
                 sslProtocol="TLS"

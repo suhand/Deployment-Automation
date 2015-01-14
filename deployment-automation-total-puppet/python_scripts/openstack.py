@@ -16,6 +16,7 @@ as per the deployment.cfg [nodes] section
 """
 import os
 import time
+from subprocess import call
 from novaclient.v1_1 import client
 
 # Nova credentials are loaded from OS environmental variables
@@ -35,6 +36,7 @@ def initialize_cluster(serverList, imageName, flavorName, networkName, instanceP
 
         # this dictionary contains the IP addresses of the populated instances
         ipmap = {}
+	#idmap = {}
         
 	# load nova credentials
 	creds = get_nova_creds()
@@ -72,8 +74,11 @@ def initialize_cluster(serverList, imageName, flavorName, networkName, instanceP
                 
 		print instanceList[i].addresses
                 ipmap[vm + "-ip"] =  (((instanceList[i].addresses)[networkName])[0])['addr']
-                print ipmap[vm + "-ip"]
+                #idmap[vm] =  (((instanceList[i].addresses)[networkName])[0])['addr']
+		print ipmap[vm + "-ip"]
                 print ipmap
+		#print "printing idmap"
+		#print idmap
                 instanceID=instanceList[i].id
                 instanceList[i].suspend()
                 #print instanceList[i].status
@@ -86,7 +91,7 @@ def initialize_cluster(serverList, imageName, flavorName, networkName, instanceP
 	# Input: config.pp
 	# Output: /etc/puppet/modules/appserver/manifests/params.pp
 	infile = open('config.pp')
-        outfile = open('/etc/puppet/modules/appserver/manifests/params.pp', 'w')
+        outfile = open('/etc/puppet/modules/products/manifests/params.pp', 'w')
 
         for line in infile:
                 for src, target in ipmap.iteritems():
@@ -99,8 +104,11 @@ def initialize_cluster(serverList, imageName, flavorName, networkName, instanceP
 	        instanceList[j].resume()
         	#time.sleep(10)
         	#instanceList[j].reboot()
-        	#call("while ! echo exit | nc "+ipmap[currentNode.prop('id')]+" 9443; do sleep 10; done", shell="True") 
-        	#print "Server "+ipmap[currentNode.prop('id')]+" is running now"
+		currentNodeIPAddress = ipmap[vm + "-ip"]
+		print "Starting server "+vm+"..."
+		call("echo -n Please wait...; while ! echo exit | nc "+currentNodeIPAddress+" 9443; do echo -n '.'; sleep 10; done", shell="True")
+		print "Server "+vm+" is online on port 9443..."
+		# -------------------
 		j=j+1
 
 def terminate_instances(serverList):
